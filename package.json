@@ -1,0 +1,30 @@
+{
+  "name": "edoquiz",
+  "version": "0.0.1",
+  "description": "Multiple-choice quiz widget: embeddable via <script>+<link>, questions from inline JSON or a URL, with a per-instance offline fallback.",
+  "type": "module",
+  "main": "dist/edoquiz.esm.js",
+  "module": "dist/edoquiz.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "build": "node esbuild.config.mjs --minify && tsc --project tsconfig.build.json",
+    "watch": "node esbuild.config.mjs --watch",
+    "dev": "node esbuild.config.mjs --watch --serve",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Benjamin Benno Falkner <bennof@falkner.xyz>",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--
+  Copyright (c) 2026 Benjamin Benno Falkner
+  SPDX-License-Identifier: MIT
+-->
+<!--
+  edoquiz — Demo-Seite (Deutsch; englische Version: demo.html)
+
+  Zeigt, wie ein gebautes edoquiz-Widget in ein beliebiges Dokument
+  eingebunden wird: ein <link> auf dist/edoquiz.css (Struktur-CSS, liest nur
+  --quiz-*-Tokens), ein <link> auf ./theme.css (setzt die Token-Werte), ein
+  <script> auf dist/edoquiz.global.js (IIFE, globaler Name "EdoQuiz") und
+  Container mit data-type="quiz". Das Widget initialisiert sich selbst bei
+  DOMContentLoaded — kein init()-Aufruf nötig. Die Texte des Widgets folgen
+  dem lang-Attribut unten. Vorher "npm run build" ausführen (oder
+  "npm run dev" für einen lokalen Server, den das data-url-Beispiel
+  braucht), damit dist/ existiert.
+-->
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>edoquiz — Demo</title>
+<link rel="stylesheet" href="../dist/edoquiz.css">
+<link rel="stylesheet" href="./theme.css">
+</head>
+<body>
+  <div class="page">
+    <header class="page-head">
+      <h1>edoquiz</h1>
+      <a class="lang-switch" href="demo.html" hreflang="en" lang="en">English</a>
+    </header>
+    <p class="lead">Ein Multiple-Choice-Quiz-Widget, das sich selbst abfragt. Beantworte die Fragen und lies
+       dann weiter, wie es aufgebaut ist.</p>
+
+    <!-- Beispiel 1: Fragen inline als JSON in data-content. Fünf Fragen im
+         Pool, data-count="3" zieht davon drei zufällig. -->
+    <div id="quiz-de-1" class="quiz-widget"
+         data-type="quiz"
+         data-count="3"
+         data-title="Wie funktioniert edoquiz?"
+         data-content='[
+            {"question":"Welches Attribut macht einen Container zum Quiz?","options":["data-type","data-role","data-quiz","data-widget"],"correct":0},
+            {"question":"Woher holt sich ein Quiz seine Fragen zuerst?","options":["data-content","data-url","localStorage","Aus einer globalen Variable"],"correct":1},
+            {"question":"Wozu dient data-content, wenn auch data-url gesetzt ist?","options":["Wird ignoriert","Als Ersatz, wenn das Laden scheitert","Legt den Titel fest","Fügt einen zweiten Fragenpool hinzu"],"correct":1},
+            {"question":"In welcher Reihenfolge erscheinen Fragen und Antworten?","options":["Immer wie geschrieben","Zufällig","Alphabetisch","Leichteste zuerst"],"correct":1},
+            {"question":"Wie wird das Ergebnis am Ende angezeigt?","options":["Als Prozentwert","Als Schulnote","Als Rangliste","Gar nicht"],"correct":0}
+         ]'>
+    </div>
+
+    <div class="topics">
+      <section class="topic">
+        <h2>Das Ergebnis-Event</h2>
+        <p>Sobald die letzte Frage beantwortet ist, löst der Container das Event <code>edoquiz-completed</code>
+           mit allen Antworten aus. Das Widget selbst schickt nichts irgendwohin — was mit den Ergebnissen
+           passiert, entscheidet die Seite. Schließe das Quiz oben ab, dann erscheint hier der
+           <code>detail</code> des Events:</p>
+        <pre><code id="result-out">(wartet auf ein abgeschlossenes Quiz)</code></pre>
+      </section>
+
+      <section class="topic">
+        <h2>Fragen aus einer Datei, mit Ersatz</h2>
+        <p>Dieses Quiz lädt seine Fragen per <code>data-url</code> aus <code>fragen.json</code>. Scheitert das
+           — offline, HTTP-Fehler, ungültiges JSON —, greift es auf den kleinen <code>data-content</code>-Pool
+           zurück. Außerdem setzt es <code>data-redo="false"</code>: kein „Nochmal versuchen“-Button.</p>
+      </section>
+    </div>
+
+    <!-- Beispiel 2: Fragen von einer URL, data-content als Offline-/Fallback-
+         Backup, kein Wiederholen. data-url braucht einen Server (npm run
+         dev); von file:// aus ist der Abruf gesperrt und der Fallback greift. -->
+    <div id="quiz-de-2" class="quiz-widget"
+         data-type="quiz"
+         data-count="2"
+         data-redo="false"
+         data-title="Quiz aus externer Datei"
+         data-url="./fragen.json"
+         data-content='[
+            {"question":"Fallback-Frage: 2 + 2 = ?","options":["3","4","5"],"correct":1}
+         ]'>
+    </div>
+
+    <div class="topics">
+      <section class="topic">
+        <h2>Das Markup</h2>
+        <p>Ein Quiz ist ein beliebiges Element mit <code>data-type="quiz"</code>; die Klasse
+           <code>quiz-widget</code> sorgt für die Gestaltung. Die Fragen sind ein JSON-Array —
+           <code>correct</code> ist der Index der richtigen Antwort:</p>
+        <pre><code>&lt;div id="mein-quiz" class="quiz-widget" data-type="quiz"
+     data-title="Hauptstädte" data-count="2"
+     data-content='[
+       {"question":"Hauptstadt von Frankreich?","options":["Paris","Rom","Oslo"],"correct":0},
+       {"question":"Hauptstadt von Norwegen?","options":["Oslo","Bern","Riga"],"correct":0}
+     ]'&gt;&lt;/div&gt;</code></pre>
+      </section>
+
+      <section class="topic">
+        <h2>Gut zu wissen</h2>
+        <p>Jedes Quiz beginnt mit einem Startbildschirm, mischt Fragen und Antworten, markiert jede Antwort
+           sofort als richtig oder falsch und endet mit einem Prozentwert. Mehrere Quizze auf einer Seite
+           arbeiten unabhängig voneinander. Der Button in der Ecke schaltet ein Quiz auf Vollbild.
+           <code>data-count</code> begrenzt, wie viele Fragen aus dem Pool gezogen werden; ohne Angabe
+           kommen alle dran.</p>
+      </section>
+    </div>
+  </div>
+
+  <script src="../dist/edoquiz.global.js"></script>
+  <script>
+    // Nur Demo: zeigt, was die Seite erhält, wenn ein Quiz abgeschlossen ist.
+    document.addEventListener('edoquiz-completed', (event) => {
+      document.getElementById('result-out').textContent =
+        JSON.stringify({ quiz: event.target.id, results: event.detail.results }, null, 2);
+    });
+  </script>
+</body>
+</html>

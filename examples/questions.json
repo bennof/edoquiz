@@ -1,0 +1,17 @@
+[
+  {
+    "question": "Which city is the capital of Australia?",
+    "options": ["Sydney", "Melbourne", "Canberra", "Perth"],
+    "correct": 2
+  },
+  {
+    "question": "How many legs does a spider have?",
+    "options": ["6", "8", "10", "12"],
+    "correct": 1
+  },
+  {
+    "question": "In which year did the Berlin Wall fall?",
+    "options": ["1987", "1989", "1991", "1993"],
+    "correct": 1
+  }
+]

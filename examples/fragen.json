@@ -1,0 +1,17 @@
+[
+  {
+    "question": "Welche Stadt ist die Hauptstadt von Australien?",
+    "options": ["Sydney", "Melbourne", "Canberra", "Perth"],
+    "correct": 2
+  },
+  {
+    "question": "Wie viele Beine hat eine Spinne?",
+    "options": ["6", "8", "10", "12"],
+    "correct": 1
+  },
+  {
+    "question": "In welchem Jahr fiel die Berliner Mauer?",
+    "options": ["1987", "1989", "1991", "1993"],
+    "correct": 1
+  }
+]

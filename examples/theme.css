@@ -1,0 +1,139 @@
+/*
+ * Copyright (c) 2026 Benjamin Benno Falkner
+ * SPDX-License-Identifier: MIT
+ */
+
+/*
+ * Optional theme file for the edoquiz demos — the single place where colors
+ * are defined. The widget's own stylesheet (dist/edoquiz.css) only *reads*
+ * the --quiz-* tokens below, each with a built-in fallback, so the widget
+ * also looks right without this file, and a theme linked after it always
+ * wins regardless of load order.
+ *
+ * Part 1 — widget tokens (copy just this part into your own site).
+ * Part 2 — a minimal page theme, only there to make the demo pages look
+ *          tidy; it has nothing to do with the widget.
+ */
+
+/* ---------------------------------------------------------------------
+ * 1. Widget tokens (values shown are the built-in defaults)
+ * ------------------------------------------------------------------- */
+:root {
+  --quiz-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --quiz-radius: 14px;                 /* the widget box; options use a fixed 10px */
+  --quiz-fullscreen-max-width: 44rem;  /* width of the centered column in fullscreen */
+
+  /* Surfaces and lines */
+  --quiz-bg: #ffffff;
+  --quiz-border: #e2e2e7;              /* box border, option border, progress track */
+  --quiz-option-bg: #fafafa;
+  --quiz-option-hover-bg: #f3f8ff;     /* also the fullscreen button's hover */
+  --quiz-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+  /* Text */
+  --quiz-text: #1d1d1f;
+  --quiz-muted: #6e6e73;               /* progress line, summary, hints */
+
+  /* Accent: buttons, progress bar, score, option hover, focus ring */
+  --quiz-accent: #0071e3;
+  --quiz-accent-hover: #0060c6;
+  --quiz-accent-contrast: #ffffff;     /* text on an accent background */
+
+  /* Feedback after answering, and errors */
+  --quiz-correct: #1e8e3e;
+  --quiz-correct-bg: #eaf7ee;
+  --quiz-wrong: #d93025;               /* also the error message */
+  --quiz-wrong-bg: #fceceb;
+}
+
+/* Dark variant: every token that differs. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --quiz-bg: #1e2127;
+    --quiz-border: #3a3f48;
+    --quiz-option-bg: #2a2e36;
+    --quiz-option-hover-bg: #253a57;
+    --quiz-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --quiz-text: #e8eaed;
+    --quiz-muted: #a3a9b3;
+    --quiz-accent: #4da3ff;
+    --quiz-accent-hover: #79b8ff;
+    --quiz-accent-contrast: #0b1220;
+    --quiz-correct: #5fd38d;
+    --quiz-correct-bg: #14301f;
+    --quiz-wrong: #f97066;
+    --quiz-wrong-bg: #3a1b1b;
+  }
+}
+
+/* ---------------------------------------------------------------------
+ * 2. Demo page theme
+ * ------------------------------------------------------------------- */
+:root {
+  color-scheme: light dark;
+  --page-bg: #ffffff;
+  --page-text: #1d1d1f;
+  --page-muted: #6e6e73;
+  --page-rule: #e2e2e7;
+  --page-code-bg: #f4f5f7;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page-bg: #15171b;
+    --page-text: #e8eaed;
+    --page-muted: #a3a9b3;
+    --page-rule: #33373f;
+    --page-code-bg: #1e2127;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--page-text);
+  font: 1rem/1.6 var(--quiz-font);
+}
+
+.page {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.page-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+h1 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 0.5rem; }
+h2 { font-size: 1.15rem; margin: 0 0 0.4rem; }
+p  { margin: 0 0 0.75rem; }
+
+.lead { color: var(--page-muted); margin-bottom: 1rem; }
+
+a { color: var(--quiz-accent); }
+a:focus-visible { outline: 2px solid var(--quiz-accent); outline-offset: 2px; }
+
+.lang-switch { font-size: 0.85rem; }
+
+.topics { margin-top: 2.5rem; }
+.topic {
+  padding: 0.5rem 0 0.5rem 1rem;
+  border-left: 3px solid var(--page-rule);
+  margin-bottom: 1.25rem;
+}
+
+pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85em; }
+code { background: var(--page-code-bg); padding: 0.1em 0.35em; border-radius: 4px; }
+pre {
+  background: var(--page-code-bg);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0.5rem 0 0.75rem;
+}
+pre code { background: none; padding: 0; }
