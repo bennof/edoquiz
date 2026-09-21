@@ -1,6 +1,6 @@
 {
   "name": "edoquiz",
-  "version": "0.0.1",
+  "version": "0.0.1-rc.2",
   "description": "Multiple-choice quiz widget: embeddable via <script>+<link>, questions from inline JSON or a URL, with a per-instance offline fallback.",
   "type": "module",
   "main": "dist/edoquiz.esm.js",
@@ -18,7 +18,8 @@
     "dev": "node esbuild.config.mjs --watch --serve",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mkversion": "git commit -a -m \"Release v$(node -p \"require('./package.json').version\")\" && git tag v$(node -p \"require('./package.json').version\") && git push origin HEAD --follow-tags"
   },
   "keywords": [],
   "author": "Benjamin Benno Falkner <bennof@falkner.xyz>",
